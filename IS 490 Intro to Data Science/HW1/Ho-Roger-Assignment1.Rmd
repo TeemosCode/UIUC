@@ -1,8 +1,8 @@
 ---
-title: "Ho-Roger-Assignment1.pdf"
+title: "Introduction to Data Science Assignment 1                                        Class ID:  52"
 output: html_document
 ---
-###                                                           Unique Class ID:  52
+###                                                                 Class ID:  52
 ```{r}
 # HW 1 Due Monday Sept 18, 2017. Upload R file or notebook to Moodle with 
 # filename: HW1_490ID_YOURUNI.R
@@ -221,17 +221,11 @@ Ans: True
 # 2. Run the following code to make a plot.
 # (don't worry right now about what this code is doing)
 plot(diamonds[1:1000,]$carat, diamonds[1:1000,]$price, xlab = "Carat", ylab = "Price", main = "Carat vs Price")
-```
-
-\(1\)
-```{r}
 # (1) Use the Zoom button in the Plots window to enlarge the plot.
 # Resize the plot so that it is long and short, so it is easier to read.
 # Include this plot in the homework your turn in.
 ```
-```{r diamonds, echo=FALSE}
-plot(diamonds[1:1000,]$carat, diamonds[1:1000,]$price, xlab = "Carat", ylab = "Price", main = "Carat vs Price")
-```
+
 
 \(2\)
 ```{r}
@@ -347,4 +341,6 @@ Ans: 0.0668072
 ```
 Ans: 
 "Because the first one only had a sample of 100 which is a really small sample size, unable to precisely calculate what it may actually be. As for the R program, it uses a huge sample size to make sure the computation precise as it can be.""
+
+
 
