@@ -1,13 +1,20 @@
+---
+title: "Ho-Roger-Assignment1.pdf"
+output: html_document
+---
+###                                                           Unique Class ID:  52
+```{r}
 # HW 1 Due Monday Sept 18, 2017. Upload R file or notebook to Moodle with 
 # filename: HW1_490ID_YOURUNI.R
 # Do Not remove any of the comments. These are marked by #
 
 ###Your Unique Class ID: 52
-
+```
+## 1.
+```{r}
 # 1.
 # Load the data for this assignment into your R session 
 # with the following command:
-
 library(ggplot2)
 data(diamonds)
 
@@ -17,20 +24,57 @@ objects(diamonds)
 # carat, clarity, color, cut, depth,
 # price, table, x, y, z
 
+```
+\(2\)
+```{r cars}
 #(2). Use the nrow() function to find out how many observations there are.
 nrow(diamonds) # 53940 rows
-
 # For the following questions, use one of: head(), summary(),
 # class(), min(), max(), hist(), quantile(), table() 
 # to answer the questions.
+```
+Ans: There are 53940 observations
 
+\(3\)
+```{r}
 #(3). Show the summary or the structure of this dataset.
-summary(diamonds) # summary :  !!!!!!!!
+summary(diamonds) 
+# summary :
+#      carat               cut        color        clarity
+#  Min.   :0.2000   Fair     : 1610   D: 6775   SI1    :13065
+#  1st Qu.:0.4000   Good     : 4906   E: 9797   VS2    :12258
+#  Median :0.7000   Very Good:12082   F: 9542   SI2    : 9194
+#  Mean   :0.7979   Premium  :13791   G:11292   VS1    : 8171
+#  3rd Qu.:1.0400   Ideal    :21551   H: 8304   VVS2   : 5066
+#  Max.   :5.0100                     I: 5422   VVS1   : 3655
+#                                     J: 2808   (Other): 2531
+#      depth           table           price             x
+#  Min.   :43.00   Min.   :43.00   Min.   :  326   Min.   : 0.000
+#  1st Qu.:61.00   1st Qu.:56.00   1st Qu.:  950   1st Qu.: 4.710
+#  Median :61.80   Median :57.00   Median : 2401   Median : 5.700
+#  Mean   :61.75   Mean   :57.46   Mean   : 3933   Mean   : 5.731
+#  3rd Qu.:62.50   3rd Qu.:59.00   3rd Qu.: 5324   3rd Qu.: 6.540
+#  Max.   :79.00   Max.   :95.00   Max.   :18823   Max.   :10.740
+# 
+#        y                z
+#  Min.   : 0.000   Min.   : 0.000
+#  1st Qu.: 4.720   1st Qu.: 2.910
+#  Median : 5.710   Median : 3.530
+#  Mean   : 5.735   Mean   : 3.539
+#  3rd Qu.: 6.540   3rd Qu.: 4.040
+#  Max.   :58.900   Max.   :31.800
 
-dim(diamonds)  # Rows: 53940, Columns: 10
 
+
+dim(diamonds)  
+# Rows: 53940, Columns: 10
+```
+Ans: Dimension of diamonds:
+Rows: 53940, Columns: 10
+
+\(4\)
+```{r }
 #(4). List the categorical variables in this dataset. !!!
-objects(diamonds)
 names(diamonds)
 class(diamonds$carat)
 class(diamonds$cut)
@@ -42,46 +86,78 @@ class(diamonds$price)
 class(diamonds$x)
 class(diamonds$y)
 class(diamonds$z)
+print("---------------")
+print("The categorical variables are :")
+print("   cut, color, clarity")
 # Ans: cut, color, clarity
+```
 
+(5)
+```{r}
 #(5). What was the highest price of the diamonds ?
 max(diamonds$price) # 18823
+print("The highest price of the diamonds are : 18823")
+```
 
+(6)
+```{r}
 #(6). What was the average price of the diamonds ?
 mean(diamonds$price) #3932.8
+print("The average price of diamonds: 3932.8")
+```
 
+(7)
+```{r}
 #(7). What is the number of the Ideal cut ?
 table(diamonds$cut == "Ideal") # TRUE == Ideal : 21551
+print("------------------------------")
 summary(diamonds$cut) # Ideal : 21551
-
+print("------------------------------")
+print("The number of Ideal cut = 21551")
+```
+(8)
+```{r}
 #(8). What is the number of the diamonds which are Premium and have a clarity level
 #     of IF?
 summary(diamonds$clarity == "IF" & diamonds$cut == "Premium") # True: 230
-
-
+print("Ans : 230")
+```
+(9)
+```{r}
 #(9). What is the averge price difference between the clarity level SI2 and IF?
 #     Hint(Use aggregate())
-#     1.
+# 1. A way of writing the code without aggregate
 SI2.price = diamonds$price[diamonds$clarity == "SI2" ]
 IF.price = diamonds$price[diamonds$clarity == "IF"]
 SI2.price.avg = sum(SI2.price) / length(SI2.price)
 IF.price.avg = sum(IF.price) / length(IF.price)
 abs(SI2.price.avg - IF.price.avg)  # 2198.189
-#     2.
+# 2.  Using the aggregate function
 aggr = aggregate(diamonds$price, by = list(diamonds$clarity), FUN=mean)
 class(aggr) # data.frame
 abs(aggr$x[aggr$Group.1 == "IF"] - aggr$x[aggr$Group.1 == "SI2"]) # 2198.189
+print("===============")
+print("Ans: 2198.189")
+```
+(10)
+```{r}
 #(10). Total depth percentage is represented as the depth divided by
 #      the mean of the length and width of the diamond, 
+
+```
+(11)
+```{r}
 # (11).
 # Try running each expression in R.
 # Record the error message in a comment
 # Explain what it means. 
 # Be sure to directly relate the wording of the error message with the problem you find in the expression.
-z/mean(x, y)
+
+#z/mean(x, y)
 
 ### Error message here
 #         Error: object 'z' not found
+```
 ### Explanation here
 # "Because the z variable was not declared to be anything before running the expression, so running this expression would result
 # R unable to find the z object,thus causing an error."
