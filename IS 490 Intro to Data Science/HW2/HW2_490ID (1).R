@@ -24,14 +24,14 @@
 ### Your code below
 data(mtcars) # load in the mtcars data
 class(mtcars) # [1] "data.frame"
-names(mtcars)
+names(mtcars) # [1] "mpg"  "cyl"  "disp" "hp"   "drat" "wt"   "qsec" "vs"   "am"   "gear" "carb"
 dim(mtcars) # [1] 32 11
-summary(mtcars)
+summary(mtcars) #
+head(mtcars, 5) #
 
+#---------------------------------
 ### Your answer here
   # column names of mtcars : [1] "mpg"  "cyl"  "disp" "hp"   "drat" "wt"   "qsec" "vs"   "am"   "gear" "carb"
-  # 
-  
   # 
   # > summary(mtcars)
   # mpg             cyl             disp             hp             drat      
@@ -56,13 +56,23 @@ summary(mtcars)
   # 3rd Qu.:4.000  
   # Max.   :8.000  
 
+# > head(mtcars, 5)
+# mpg cyl disp  hp drat    wt  qsec vs am gear carb
+# Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+# Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+# Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+# Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+# Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+#-----------------------------
+
 # Q2.(2 pts)
 # Create a vector mpg_cl based on mpg in the dataset. 
 # For automatic cars, the vector should have value TRUE when mpg > 16 and value FALSE when mpg <= 16.
 # For manual cars, the vector should have value TRUE when mpg > 20 and value FALSE when mpg <= 20.
 
 ### Your code below
-
+mpg_cl_automatic = mtcars$mpg > 16
+mpg_cl_manual = mtcars$mpg > 20
 
 # Q3.(2 pts)
 # Here is an alternative way to create the same vector in Q2.
@@ -72,12 +82,12 @@ summary(mtcars)
 # id_val whose first element is 16 and second element is 20.
 
 ### Your code below
-
+id_val = c(16, 20)
 # Create the mpg_index vector by subsetting id_val by position, where the 
 # positions could be represented based on am column in mtcars.
 
 ### Your code below
-
+mpg_index = id_val
 # Finally, us mpg_index and mpg column to create the desired vector, and
 # call it mpg_cl2.
 
@@ -101,8 +111,12 @@ load(url("https://www.stanford.edu/~vcs/StatData/SFHousing.rda"))
 # What objects are in SFHousing.rda? Give the name and class of each.
 
 ### Your code below
-
+names(cities)
+class(housing)
 ### Your answer here
+#names : [1] "longitude"   "latitude"    "county"      "medianPrice" "medianSize" 
+#[6] "numHouses"   "medianBR"  
+#class: [1] "data.frame"
 
 # Give a summary of each object, including a summary of each variable and the dimension of the object.
 
