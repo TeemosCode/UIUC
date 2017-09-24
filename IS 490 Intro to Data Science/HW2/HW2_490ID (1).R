@@ -28,6 +28,7 @@ names(mtcars) # [1] "mpg"  "cyl"  "disp" "hp"   "drat" "wt"   "qsec" "vs"   "am"
 dim(mtcars) # [1] 32 11
 summary(mtcars) #
 head(mtcars, 5) #
+help(mtcars) #
 
 #---------------------------------
 ### Your answer here
@@ -65,14 +66,29 @@ head(mtcars, 5) #
 # Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
 #-----------------------------
 
+# > help(mtcars)
+# A data frame with 32 observations on 11 variables.
+# 
+# [, 1]	mpg	Miles/(US) gallon
+# [, 2]	cyl	Number of cylinders
+# [, 3]	disp	Displacement (cu.in.)
+# [, 4]	hp	Gross horsepower
+# [, 5]	drat	Rear axle ratio
+# [, 6]	wt	Weight (1000 lbs)
+# [, 7]	qsec	1/4 mile time
+# [, 8]	vs	V/S
+# [, 9]	am	Transmission (0 = automatic, 1 = manual)
+# [,10]	gear	Number of forward gears
+# [,11]	carb	Number of carburetors
+
 # Q2.(2 pts)
 # Create a vector mpg_cl based on mpg in the dataset. 
 # For automatic cars, the vector should have value TRUE when mpg > 16 and value FALSE when mpg <= 16.
 # For manual cars, the vector should have value TRUE when mpg > 20 and value FALSE when mpg <= 20.
 
 ### Your code below
-mpg_cl_automatic = mtcars$mpg > 16
-mpg_cl_manual = mtcars$mpg > 20
+mpg_cl = (mtcars$mpg > 16 & mtcars$am == 0 | mtcars$mpg > 20 & mtcars$am == 1)
+
 
 # Q3.(2 pts)
 # Here is an alternative way to create the same vector in Q2.
@@ -111,17 +127,32 @@ load(url("https://www.stanford.edu/~vcs/StatData/SFHousing.rda"))
 # What objects are in SFHousing.rda? Give the name and class of each.
 
 ### Your code below
-names(cities)
+names(housing)
 class(housing)
+names(cities)
+class(cities)
 ### Your answer here
 #names : [1] "longitude"   "latitude"    "county"      "medianPrice" "medianSize" 
-#[6] "numHouses"   "medianBR"  
-#class: [1] "data.frame"
+
+# > names(cities)
+# [1] "longitude"   "latitude"    "county"      "medianPrice" "medianSize" 
+# [6] "numHouses"   "medianBR"  
+
+# > names(housing)
+# [1] "county"  "city"    "zip"     "street"  "price"   "br"      "lsqft"   "bsqft"  
+# [9] "year"    "date"    "long"    "lat"     "quality" "match"   "wk"   
+
+# > class(housing)
+# [1] "data.frame"
+
+# > class(cities)
+# [1] "data.frame"
 
 # Give a summary of each object, including a summary of each variable and the dimension of the object.
 
 ### Your code below
-
+summary(housing)
+summary(cities)
 ### Your answer here
 
 # After exploring the data (maybe using the summary() function), describe in words the connection
@@ -143,7 +174,14 @@ class(housing)
 # do not contain incorrect levels)
 
 ### Your code below
-
+SelectArea = 
+  housing[housing$city == "Oakland" 
+          | housing$city =="San Francisco" 
+          | housing$city == "Campbell" 
+          | housing$city == "Sunnyvale"
+          , c("county", "city", "zip", "price", "br", "bsqft", "year")]
+#checking if I got the observations right
+length(SelectArea[,"county"]) # [1] 28843 
 
 # Q7. (3 pts.)
 # We are interested in making plots of price and size of house, but before we do this
@@ -154,13 +192,22 @@ class(housing)
 # have 26459 observations.
 
 ### Your code below
-
+SelectArea = SelectArea[ SelectArea$price < quantile(SelectArea$price, c(0.95), na.rm=T) & SelectArea$bsqft < quantile(SelectArea$bsqft, c(0.95), na.rm=T), ]
+#checking if I got the observations right
+length(s[,1]) # [1] 26459
 
 # Q8 (2 pts.)
 # Create a new vector that is called price_per_sqft by dividing the sale price by the square footage
 # Add this new variable to the data frame.
 
 ### Your code below
+price_per_sqft = SelectArea$price / SelectArea$bsqft
+SelectArea$price_per_sqft = price_per_sqft
+#print out the dataframe objects to make sure the variable price_per_sqft is added in. 
+objects(SelectArea)
+# > objects(SelectArea)
+# [1] "br"             "bsqft"          "city"           "county"        
+# [5] "price"          "price_per_sqft" "year"           "zip" 
 
 
 # Q9 (2 pts.)
@@ -169,7 +216,10 @@ class(housing)
 # bedrooms then br5 will be 5. Otherwise it will be the number of bedrooms.
 
 ### Your code below
-
+br_new = SelectArea[, "br"]
+br_new[SelectArea[, "br"] > 5] = 5
+# checking if I got the vector correct by having it print out numbers that are larger or equal to 5
+br_new[br_new >= 5] # it only contains the number 5, which proves the above code is correct
 
 # Q10. (4 pts. 2 + 2 - see below)
 # Use the rainbow function to create a vector of 5 colors, call this vector rCols.
@@ -180,7 +230,8 @@ class(housing)
 # (2 pts.)
 
 ### Your code below
-
+rCols = rainbow(5, alpha = 0.25)
+brCols = rCols[br_new]
 
 ######
 # We are now ready to make a plot!
