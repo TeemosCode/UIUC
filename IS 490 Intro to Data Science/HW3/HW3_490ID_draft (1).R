@@ -237,7 +237,30 @@ class(sapply(l, sum))
 
 #(d) Change one of them to make the two statement return the same results (type of object):
 ###code & result
-
+lapply(l, sum)
+lapply(l, var)
+class(lapply(l, sum))
+class(lapply(l, var))
+# Results:
+# > lapply(l, sum)
+# $a
+# [1] 55
+# 
+# $b
+# [1] 255
+# 
+# > lapply(l, var)
+# $a
+# [1] 9.166667
+# 
+# $b
+# [1] 9.166667
+# 
+# > class(lapply(l, sum))
+# [1] "list"
+# > class(lapply(l, var))
+# [1] "list"
+# Both statements have the same class of "list" when both use lapply.
 
 
 # Now create the following list:
@@ -245,27 +268,41 @@ l.2 <- list(c = c(11:20), d = c(31:40))
 #(e) What is the sum of the corresponding elements of l and l.2, using one function call? Your result should be a 
 # single vector with length 10.
 ###code & result
-
+sapply(c(l,l.2), sum) #!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
 #(f) Take the log of each element in the list l:
 ###code & result
-
+sapply(l, log)
+# Result:
+# > sapply(l, log)
+# a        b
+# [1,] 0.0000000 3.044522
+# [2,] 0.6931472 3.091042
+# [3,] 1.0986123 3.135494
+# [4,] 1.3862944 3.178054
+# [5,] 1.6094379 3.218876
+# [6,] 1.7917595 3.258097
+# [7,] 1.9459101 3.295837
+# [8,] 2.0794415 3.332205
+# [9,] 2.1972246 3.367296
+# [10,] 2.3025851 3.401197
 
 
 #(g) First change l and l.2 into matrixes, make each element in the list as column,
 ###code & result
+!!!!!!!!!!!!!!!!!!!!!!!!
 
 
 
 #Then, form a list named mylist using l,l.2 and m (from Q1) (in that order).
 ###code & result
-
-
+mylist = list(l, l.2, m)
+!!!!!!!!!!!!!!!!!!!!!
 
 #Then, select the second column of each elements in mylist in one function call (hint '[' is the select operator).
 ###code & result
-
+!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
 
@@ -273,15 +310,36 @@ l.2 <- list(c = c(11:20), d = c(31:40))
 # Let's load the family data again.
 load(url("http://courseweb.lis.illinois.edu/~jguo24/family.rda"))
 #(a) Find the mean bmi by gender in one function call.
-###code & result
+###code & result #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+aggregate(family$bmi, by = list(family$gender), FUN = mean)
+# Result:
+# > aggregate(family$bmi, by = list(family$gender), FUN = mean)
+# Group.1        x
+# 1       m 25.73898
+# 2       f 23.02564
+# Ans: Male's mean bmi is 25.73898.
+#      Female's mean bmi is 23.02564.
 
 
 #(b) Could you get a vector of what the type of variables the dataset is made of???
 ###code & result
+sapply(family, class)
+# Result:
+# > sapply(family, class)
+# firstName    gender       age    height    weight       bmi    overWt 
+# "factor"  "factor" "integer" "numeric" "integer" "numeric" "logical"
+class(sapply(family, class))
+# Result:
+# > class(sapply(family, class))
+# [1] "character" 
+# The sapply(family, class) returns a vector of the types of each variables in the family dataset.
+# Each type of the variable is written under the variable name.
 
 
 #(c) Could you sort the firstName in bmi descending order?
 ###code & result
+#!!!!!!!!!!!!!!!!!!!!!!!!
+family[sort(family$bmi, decreasing = T), "firstName"]
 
 
 
@@ -291,12 +349,22 @@ load(url("http://courseweb.lis.illinois.edu/~jguo24/family.rda"))
 # yourself with this dataset.
 #(a) Find the mean petal width by species.
 ### code & result
-
+aggregate(iris$Petal.Width, by = list(iris$Species), FUN = mean)
+# Result:
+# > aggregate(iris$Petal.Width, by = list(iris$Species), FUN = mean)
+# Group.1     x
+# 1     setosa 0.246
+# 2 versicolor 1.326
+# 3  virginica 2.026
+# Ans: The mean of petal width with the species:
+      # setosa = 0.246
+      # versicolor = 1.326
+      # virginica = 2.026
 
 
 #(b) Now obtain the mean of the first 4 variables, by species, but using only one function call.
 ### code & result
-
+#!!!!!!!!!!!!
 
 
 #Q5. (5 pts) Now with the "iris" data, fit a simple linear regression model using lm() to predict 
