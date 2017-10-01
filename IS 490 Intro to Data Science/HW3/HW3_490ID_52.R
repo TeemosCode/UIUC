@@ -33,7 +33,7 @@ matrix(myfunc(y),ncol=3)
 
 #(c) Simplify the code in (b) using one of the "apply" functions and save the result as m.
 ###code & result
-m = sapply( myfunc(1:8), matrix, ncol = 3) #!!!!!!
+# m = t(sapply( y, myfunc))
 m = matrix(sapply(c(1:8), myfunc), ncol = 3, byrow=T)
 # Result:
 # > m = matrix(sapply(c(1:8), myfunc), ncol = 3, byrow=T)
@@ -51,28 +51,12 @@ m = matrix(sapply(c(1:8), myfunc), ncol = 3, byrow=T)
 
 #(d) Find the column product of m.
 ###code & result
-column.product = function(param.matrix, column.num){
-  product = 1
-  for(num in param.matrix[,column.num]){
-    product = product * num
-  }
-  return(product)
-}
-product.col1 = column.product(m, 1) # [1] 40320 for column 1
-product.col2 = column.product(m, 2) # [1] 1625702400 for column 2
-product.col3 = column.product(m, 3) # [1] 57153600 for column 3
+apply(m, 2, prod)
 # Results:
-# column 1 product:
-# > product.col1
-# [1] 40320
+# > apply(m, 2, prod)
+# [1]      40320 1625702400   57153600
+# Meaning, column1 product=40320, column2 product=1625702400, column3 product=57153600
 
-# column 2 product:
-# > product.col2
-# [1] 1625702400
-
-# column 3 product:
-# > product.col3
-# [1] 57153600
 column.product = function(matrix.param, colnums.vector){
   ans = colnums.vector
   for(colnums in colnums.vector){
@@ -91,6 +75,7 @@ m.col.product = column.product(m, 1:ncol(m))
 # > m.col.product
 # [1]      40320 1625702400   57153600
 # Meaning, column1 product=40320, column2 product=1625702400, column3 product=57153600
+
 
 #(e) Find the row sum of m in two ways.
 ###code & result
@@ -160,7 +145,7 @@ m.times2
 # [7,]   14   98   56
 # [8,]   16  128   72
 
-
+m * 2
 
 #Q2 (10 pts)
 #Create a list l with 2 elements as follows:
@@ -237,10 +222,16 @@ class(sapply(l, sum))
 
 #(d) Change one of them to make the two statement return the same results (type of object):
 ###code & result
+
 lapply(l, sum)
 lapply(l, var)
 class(lapply(l, sum))
 class(lapply(l, var))
+
+as.list(sapply(l, sum))
+as.list(sapply(l, var))
+class(as.list(sapply(l, sum)))
+class(as.list(sapply(l, var)))
 # Results:
 # > lapply(l, sum)
 # $a
@@ -260,7 +251,27 @@ class(lapply(l, var))
 # [1] "list"
 # > class(lapply(l, var))
 # [1] "list"
+# 
 # Both statements have the same class of "list" when both use lapply.
+# > as.list(sapply(l, sum))
+# $a
+# [1] 55
+# 
+# $b
+# [1] 255
+# 
+# > as.list(sapply(l, var))
+# $a
+# [1] 9.166667
+# 
+# $b
+# [1] 9.166667
+# 
+# > class(as.list(sapply(l, sum)))
+# [1] "list"
+# > class(as.list(sapply(l, var)))
+# [1] "list"
+# As we can see, coericing sapply to list with as.list still has the same value and with a same type: list.
 
 
 # Now create the following list:
