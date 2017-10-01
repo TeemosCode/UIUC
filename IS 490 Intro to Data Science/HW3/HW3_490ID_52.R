@@ -378,15 +378,30 @@ aggregate(iris$Petal.Width, by = list(iris$Species), FUN = mean)
 #(b) Now obtain the mean of the first 4 variables, by species, but using only one function call.
 ### code & result
 #!!!!!!!!!!!!
-
+aggregate(iris, by = list(iris$Species), FUN = mean)
 
 #Q5. (5 pts) Now with the "iris" data, fit a simple linear regression model using lm() to predict 
 # Petal length from Petal width. Place your code and output (the model) below. 
+lm(iris$Petal.Length ~ iris$Petal.Width, data = iris)
 
+# Output:
+# > lm(iris$Petal.Length ~ iris$Petal.Width, data = iris)
+# 
+# Call:
+#   lm(formula = iris$Petal.Length ~ iris$Petal.Width, data = iris)
+# 
+# Coefficients:
+#     (Intercept)  iris$Petal.Width  
+#           1.084             2.230  
 
 # How do you interpret this model?
-
+# From the output we can see the intercept is 1.084 and the coefficient of the "iris" Petal width data is 2.230.
+# Which means that the predicted iris petal length increases by 2.230 for every unit increase in petal width, and that they are positively correlated.
+# From the output we can also tell that the complete regression equation is "iris_Petal_length = 2.23 * iris_Petal_width + 1.084".
 
 # Create a scatterplot of Petal length vs Petal width. Add the linear regression line you found above.
 # Provide an interpretation for your plot.
 ### code & result
+plot(iris$Petal.Width, iris$Petal.Length, main = "IRIS Petal Width vs Petal Length",
+     xlab="Petal Width", ylab="Petal Length")
+abline(lm(iris$Petal.Length ~ iris$Petal.Width, data = iris), col = 'blue', lwd= 2)
