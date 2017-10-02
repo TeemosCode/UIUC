@@ -104,6 +104,10 @@ m.row.sum = row.sum(m, 1:nrow(m))
 # Second way:
 row.sum = apply(m, 1, sum)
 row.sum
+#Result2
+# > row.sum = apply(m, 1, sum)
+# > row.sum
+# [1]   3   9  18  30  45  63  84 108
 
 #(f) Multiple all the values by 2 in two different ways:
 ### 1. code & result
@@ -145,7 +149,19 @@ m.times2
 # [7,]   14   98   56
 # [8,]   16  128   72
 
+# or simply with
 m * 2
+# # Result:
+# > m * 2
+# [,1] [,2] [,3]
+# [1,]    2    2    2
+# [2,]    4    8    6
+# [3,]    6   18   12
+# [4,]    8   32   20
+# [5,]   10   50   30
+# [6,]   12   72   42
+# [7,]   14   98   56
+# [8,]   16  128   72
 
 #Q2 (10 pts)
 #Create a list l with 2 elements as follows:
@@ -187,7 +203,75 @@ lapply(l, sum)
 sapply(l, sum)
 class(lapply(l, sum))
 class(sapply(l, sum))
-
+# > help(sapply)
+# > help(lapply)
+# > lapply(l, sum)
+# [[1]]
+# [1] 1
+# 
+# [[2]]
+# [1] 2
+# 
+# [[3]]
+# [1] 3
+# 
+# [[4]]
+# [1] 4
+# 
+# [[5]]
+# [1] 5
+# 
+# [[6]]
+# [1] 6
+# 
+# [[7]]
+# [1] 7
+# 
+# [[8]]
+# [1] 8
+# 
+# [[9]]
+# [1] 9
+# 
+# [[10]]
+# [1] 10
+# 
+# [[11]]
+# [1] 21
+# 
+# [[12]]
+# [1] 22
+# 
+# [[13]]
+# [1] 23
+# 
+# [[14]]
+# [1] 24
+# 
+# [[15]]
+# [1] 25
+# 
+# [[16]]
+# [1] 26
+# 
+# [[17]]
+# [1] 27
+# 
+# [[18]]
+# [1] 28
+# 
+# [[19]]
+# [1] 29
+# 
+# [[20]]
+# [1] 30
+# 
+# > sapply(l, sum)
+# [1]  1  2  3  4  5  6  7  8  9 10 21 22 23 24 25 26 27 28 29 30
+# > class(lapply(l, sum))
+# [1] "list"
+# > class(sapply(l, sum))
+# [1] "integer"
 
 ###written explanation
 
@@ -271,7 +355,7 @@ class(as.list(sapply(l, var)))
 # [1] "list"
 # > class(as.list(sapply(l, var)))
 # [1] "list"
-# As we can see, coericing sapply to list with as.list still has the same value and with a same type: list.
+# As we can see, coercing sapply to list with as.list still has the same value and with a same type: list.
 
 
 # Now create the following list:
@@ -280,7 +364,12 @@ l.2 <- list(c = c(11:20), d = c(31:40))
 # single vector with length 10.
 ###code & result
 mapply(sum, l$a, l$b, l.2$c, l.2$d)
-
+length(mapply(sum, l$a, l$b, l.2$c, l.2$d))
+# Result:
+# > mapply(sum, l$a, l$b, l.2$c, l.2$d)
+# [1]  64  68  72  76  80  84  88  92  96 100
+# > length(mapply(sum, l$a, l$b, l.2$c, l.2$d))
+# [1] 10
 
 #(f) Take the log of each element in the list l:
 ###code & result
@@ -304,8 +393,33 @@ sapply(l, log)
 ###code & result
 l = matrix(c(l$a, l$b), ncol = 2 )
 l.2 = matrix(c(l.2$c, l.2$d), ncol = 2)
-
-
+l
+l.2
+# Result:
+# > l
+# [,1] [,2]
+# [1,]    1   21
+# [2,]    2   22
+# [3,]    3   23
+# [4,]    4   24
+# [5,]    5   25
+# [6,]    6   26
+# [7,]    7   27
+# [8,]    8   28
+# [9,]    9   29
+# [10,]   10   30
+# > l.2
+# [,1] [,2]
+# [1,]   11   31
+# [2,]   12   32
+# [3,]   13   33
+# [4,]   14   34
+# [5,]   15   35
+# [6,]   16   36
+# [7,]   17   37
+# [8,]   18   38
+# [9,]   19   39
+# [10,]   20   40
 
 #Then, form a list named mylist using l,l.2 and m (from Q1) (in that order).
 ###code & result
@@ -314,9 +428,56 @@ mylist = list(l, l.2, m)
 
 #Then, select the second column of each elements in mylist in one function call (hint '[' is the select operator).
 ###code & result
-!!!!!!!!!!!!!!!!!!!!!!!!
-mapply()
-
+sapply(mylist, function(x) x[,2])
+# Result:
+# > sapply(mylist, function(x) x[,2])
+# [[1]]
+# [1] 21 22 23 24 25 26 27 28 29 30
+# 
+# [[2]]
+# [1] 31 32 33 34 35 36 37 38 39 40
+# 
+# [[3]]
+# [1]  1  4  9 16 25 36 49 64
+mylist
+# > mylist
+# [[1]]
+# [,1] [,2]
+# [1,]    1   21
+# [2,]    2   22
+# [3,]    3   23
+# [4,]    4   24
+# [5,]    5   25
+# [6,]    6   26
+# [7,]    7   27
+# [8,]    8   28
+# [9,]    9   29
+# [10,]   10   30
+# 
+# [[2]]
+# [,1] [,2]
+# [1,]   11   31
+# [2,]   12   32
+# [3,]   13   33
+# [4,]   14   34
+# [5,]   15   35
+# [6,]   16   36
+# [7,]   17   37
+# [8,]   18   38
+# [9,]   19   39
+# [10,]   20   40
+# 
+# [[3]]
+# [,1] [,2] [,3]
+# [1,]    1    1    1
+# [2,]    2    4    3
+# [3,]    3    9    6
+# [4,]    4   16   10
+# [5,]    5   25   15
+# [6,]    6   36   21
+# [7,]    7   49   28
+# [8,]    8   64   36
+# Showing proof of correctly selecting the second column of each elements in mylist in one function call
 
 
 #Q3 (3 pts)
@@ -342,7 +503,7 @@ sapply(family, class)
 # firstName    gender       age    height    weight       bmi    overWt 
 # "factor"  "factor" "integer" "numeric" "integer" "numeric" "logical"
 class(sapply(family, class))
-# Result:
+# Result:Proof
 # > class(sapply(family, class))
 # [1] "character" 
 # The sapply(family, class) returns a vector of the types of each variables in the family dataset.
@@ -351,10 +512,24 @@ class(sapply(family, class))
 
 #(c) Could you sort the firstName in bmi descending order?
 ###code & result
-#!!!!!!!!!!!!!!!!!!!!!!!!
-family[sort(family$bmi, decreasing = T), "firstName"]
-aggregate(family$bmi, by = list(family$gender), FUN = mean)
-
+aggregate(family$firstName, by = list(family$bmi), FUN = sort)[14:1,]
+# Result:
+# > aggregate(family$firstName, by = list(family$bmi), FUN = sort)[14:1,]
+# Group.1   x
+# 14 30.04911 Tom
+# 13 28.94981 Liz
+# 12 28.18797 Jon
+# 11 26.66430 Tim
+# 10 26.05364 Ann
+# 9  25.16239 Tom
+# 8  24.48414 Bob
+# 7  24.45884 Joe
+# 6  24.26126 Art
+# 5  22.91060 Zoe
+# 4  22.64384 Dan
+# 3  21.50106 May
+# 2  20.67783 Sal
+# 1  18.06089 Sue
 
 #Q4 (2 pts)
 # There is a famous dataset in R called "iris." It should already be loaded
@@ -377,8 +552,13 @@ aggregate(iris$Petal.Width, by = list(iris$Species), FUN = mean)
 
 #(b) Now obtain the mean of the first 4 variables, by species, but using only one function call.
 ### code & result
-#!!!!!!!!!!!!
-aggregate(iris, by = list(iris$Species), FUN = mean)
+aggregate(iris[,1:4], by = list(iris$Species), FUN = mean)
+# Result:
+# > aggregate(iris[,1:4], by = list(iris$Species), FUN = mean)
+#      Group.1 Sepal.Length Sepal.Width Petal.Length Petal.Width
+# 1     setosa        5.006       3.428        1.462       0.246
+# 2 versicolor        5.936       2.770        4.260       1.326
+# 3  virginica        6.588       2.974        5.552       2.026
 
 #Q5. (5 pts) Now with the "iris" data, fit a simple linear regression model using lm() to predict 
 # Petal length from Petal width. Place your code and output (the model) below. 
