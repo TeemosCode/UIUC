@@ -20,12 +20,10 @@
 #Add normal curves to all of the plots. 
 #Display the three histograms as well as your code below. 
 #Also comment something on the shape of the histogram for each plot
-
 set.seed(000)
 size10 = rbinom(500, size = 10, p = 0.45)
 size30 = rbinom(500, size = 30, p=0.45)
 size50 = rbinom(500,50,0.45)
-
 
 
 normalplot = function(size){
@@ -60,6 +58,7 @@ normalplot(size50)
 # might consider creating density plots, changing color, axes, 
 # labeling, legend, and others for example.
 
+# self define functions so would not need to constantly copy and paste
 normalcurves = function(dist, size){
   plot(density(dist), col='red', main = paste(c("Density of Trial Size:", size), collapse = " "),
        xlab = "Values of 500 observations")
@@ -71,10 +70,17 @@ putlegend = function(x,y,legendsize){
          lwd=c(2.5,2.5),col=c("blue","red"),
          cex = legendsize)}
 
+# create just the density plot to show an overview of the distribution, do not want to add the
+# histogram bars because it will become clotted and distracting to look at.
+
+# Color the suface beneath the density plot for direct understanding for viewers of the area,
+# use different colors for the density function and the area beneath it so it can be easily 
+# recognized. Added understandable labels for x and y axis and the main plot name that include the
+# trail size. Also add legends in the end so readers can understand what the two colors represents.
+
 size10improved = normalcurves(size10, 10)
 polygon(size10improved, col = "blue", border = "red")
 putlegend(4.5,0.3,0.62)
-
 
 size30improved = normalcurves(size30, 30)
 polygon(size30improved, col = "blue", border = "red")
@@ -182,7 +188,7 @@ CorX
 # two different values is 0.75190451, and the pair of variables that have this value is 
 # "pgg45" and "gleason".
 
-#### Extra Practice to write Code to find the to variable names with largest correlation ####
+#### Extra Self Practice to write Code to find the to variable names with largest correlation ####
 maxCor = c()
 for(i in 1:dim(CorX)[1]){
   maxCor[i] = max(CorX[i,CorX[i,] != 1])
@@ -214,7 +220,7 @@ colnames(CorX)[maxValuePosition[2]]
 # install.packages("corrplot")
 install.packages("corrplot")
 library(corrplot)
-corrplot(CorX) #####!!!!!!! Put it on!!!
+corrplot(CorX)
 
 
 # (f) (3 pts.)
@@ -228,10 +234,11 @@ age_group$age[40 <= age_group$age & age_group$age < 50] = "fortys"
 age_group$age[50 <= age_group$age & age_group$age < 60] = "fiftys" 
 age_group$age[60 <= age_group$age & age_group$age < 70] = "sixtys" 
 age_group$age[70 <= age_group$age & age_group$age < 80] = "seventys" 
+
 counts = table(age_group$age)
-xx = barplot(counts, main="Barplot of Age", ylab="Number of people")
+x_lab = barplot(counts, main="Barplot of Age", ylab="Number of people")
 # Adding values on the bars of barplot for easier readability
-text(x = xx, y = counts, label = counts, pos = 1, cex = 1, col = "blue")
+text(x = x_lab, y = counts, label = counts, pos = 1, cex = 1, col = "blue")
 
 
 #(g) Bonus (1 pt) Can you try to make the same plot using ggplot?
@@ -277,7 +284,7 @@ str(titanic_data)
 # $ Embarked   : Factor w/ 4 levels "","C","Q","S": 4 2 4 4 4 4 4 4 2 4 ...
 # - attr(*, "na.action")=Class 'omit'  Named int [1:177] 6 18 20 27 29 30 32 33 37 43 ...
 # .. ..- attr(*, "names")= chr [1:177] "6" "18" "20" "27" ...
-
+##################
 # Ans: I would think of changing the variable "Survived" into categorical data of "Lived" or "Died"
 
 
@@ -305,7 +312,7 @@ class(titanic_data$Pclass)
 #http://ggplot2.tidyverse.org/reference/geom_freqpoly-9.png
 
 ggplot(titanic_data, aes(x = titanic_data$Age, fill = titanic_data$Survived)) +
-  geom_histogram(binwidth = 5) + 
+  geom_histogram(binwidth = 3) + 
   labs(title = "Age Survival of Titanic Histogram", x = "Age",
       y = "Number of People", fill = "Survived")
 
@@ -320,3 +327,4 @@ mosaic(~ Sex + Survived + Pclass,
        data = titanic_data, 
        main = "Titanic MosaicPlot", 
        shade = T)
+
