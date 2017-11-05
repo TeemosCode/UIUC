@@ -10,31 +10,60 @@
 
 
 #(a). As we will generate random numbers please set the seed using your classID. This will help with reproducibility. (1 pts)
-
+set.seed(52)
 
 #(b)  For this simulation problem, we will sample data from the binomial distribution with parameters n and p. 
-
 # First, we will estimate an individual experiment.
 
 ##(1) Generate m = 100 observations of test data, with n = 10 and p = 0.8 and name it test_sample. (1 pts)
+test_sample = rbinom(100, 10, 0.8)
+#### OutPut ####
+# > test_sample
+# [1]  9  5  9 10  6  8  7 10 10 10  7  7 10  5  7  8  9  8  7  7  8  8  9  9  8  6  9  9  6  7  9  8
+# [33]  7  6  5 10  9  8  8  6  8  9  6  7  7  7 10  9  7  9  8  7  9  8  8  8  9  9  9  8  9  5  9  8
+# [65]  8  9  7  6  8  5  7  9  8  7  9  9  7  7  8  8  6  6  7  7  8  8  8  5  9  9  5  7  8 10  8  9
+# [97]  8  8  9  4
 
 ##(2) What is your estimate mean X_bar? (1 pts)
+X_bar = mean(test_sample)
+#### OutPut ####
+# > X_bar
+# [1] 7.78
 
-##(3) What is the confidence interval for X_bar? (Recall HW4 Q5) (1 pts)
-
+##(3) What is the confidence interval for X_bar? (Recall HW4 Q5) (1 pts) ******
+SE = sd(test_sample)
+# > SE
+# [1] 1.382283
+confidence_interval = c(X_bar - SE, X_bar + SE)
+# > confidence_interval
+# [1] 6.397717 9.162283
+# Ans: Confidence Interval = [mean +- SE(which equals SD)] = [7.78 +- 1.382283] = [6.397717, 9.162283]
 
 #(c) Now use the simulation to estimate the distribution of X_bar and create confidence intervals for it using that distribution.
-
 ##(1) Form a set of X_bar by repeating B = 1000 times the individual experiment. You may want to create a matrix to save those values.(1 pts)
+L = list()
+for(index in 1:1000){
+  L[[index]] = rbinom(100, 10, 0.8)
+}
 
 ##(2) Get a estimate for mean X_bar for each experiment in (c)(1) and save it to a vector X_bar_estimate(length B vector).(1 pts)
+X_bar_estimate = sapply(L, mean)
 
 ##(3) Now use X_bar_estimate to create a sampling distribution for X_bar, using the hist function to show the distribution.(Recall HW5 graphing techniques)
 ## Does the distribution look normal? (2 pts)
+hist(X_bar_estimate, main = "Mean Sampling Distribution for X_bar", xlab = "Mean Point Estimates")
+# Yes, it looks bell shaped, symmetric like a normal distribution.
 
 ##(4) Now as we have a simulated sampling distribution of X_bar, we could calculate the standard error using the X_bar_estimate. 
 ## What is your 95% confidence interval?(2 pts)
 
+SE = sd(X_bar_estimate)
+# > SE
+# [1] 0.1199445
+confidence_interval = c(X_bar - 1.96 * SE, X_bar + 1.96 * SE)
+# > confidence_interval
+# [1] 7.544909 8.015091
+## Ans: 95% Confidence Interval = [mean +- SE(which equals SD)] = [7.78 +- 0.1199445] = [7.544909, 8.015091]
 
 
 
@@ -52,7 +81,14 @@
 MC_sample <- function(sample_size, B){
   
   #code here
-  
+  L = list()
+  for(index in 1:B){
+    L[[index]] = rbinom(sample_size, 10, 0.8)
+  }
+  X_bar_estimate = sapply(L, mean)
+  SE = sd(X_bar_estimate)
+  confidence_interval = c(X_bar - 1.96 * SE, X_bar + 1.96 * SE)
+  return(confidence_interval)
 }
 
 #(e).Plot your CI limits to compare the effect of changing the sample size and 
