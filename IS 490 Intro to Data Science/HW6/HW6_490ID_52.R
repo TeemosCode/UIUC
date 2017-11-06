@@ -34,10 +34,11 @@ X_bar = mean(test_sample)
 SE = sd(test_sample)/sqrt(100)
 # > SE
 # [1] 0.1382283
-confidence_interval = c(X_bar - SE, X_bar + SE)
+# we use 95% confidence interval
+confidence_interval = c(X_bar - 1.96 * SE, X_bar + 1.96 * SE)
 # > confidence_interval
-# [1] 7.641772 7.918228
-# Ans: Confidence Interval = [mean +- SE] = [7.78 +- 0.1382283] = [7.641772, 7.918228]
+# [1] 7.509072 8.050928
+# Ans: Confidence Interval = [mean +- SE] = [7.78 +- 0.1382283] = [7.509072, 8.050928]
 
 #(c) Now use the simulation to estimate the distribution of X_bar and create confidence intervals for it using that distribution.
 ##(1) Form a set of X_bar by repeating B = 1000 times the individual experiment. You may want to create a matrix to save those values.(1 pts)
@@ -56,7 +57,6 @@ hist(X_bar_estimate, main = "Mean Sampling Distribution for X_bar", xlab = "Mean
 
 ##(4) Now as we have a simulated sampling distribution of X_bar, we could calculate the standard error using the X_bar_estimate. 
 ## What is your 95% confidence interval?(2 pts)
-
 SE = sd(X_bar_estimate)
 # > SE
 # [1] 0.1199445
@@ -92,16 +92,39 @@ MC_sample <- function(sample_size, B){
 
 #(e).Plot your CI limits to compare the effect of changing the sample size and 
 # changing the number of simulation replications B (2 plots). What do you conclude? (3 pts)
-for(i in 1:5){
-  sz = sample(50:250 , 1, replace = T)
-  B = sample(900: 1500, 1 , replace = T)
-  if(i == 1){
-    CIs = matrix(MC_sample(sz,B), ncol = 2)
-  }else{
-    CIs = rbind(CIs, MC_sample(sz,B))
-  }
+# for(i in 1:10){
+#   sz = sample(50:250 , 1, replace = T)
+#   B = sample(900: 1500, 1 , replace = T)
+#   if(i == 1){
+#     CIs = matrix(MC_sample(sz,B), ncol = 2)
+#   }else{
+#     CIs = rbind(CIs, MC_sample(sz,B))
+#   }
+# }
+
+# Change of Sample Size
+CIWidth = c()
+counter = 1
+sample_size = seq(100, 1000, by = 100)
+for(size in sample_size){
+  ci = MC_sample(size, 1000)
+  CIWidth[counter] = ci[2] - ci[1]
+  counter = counter + 1
 }
-plot(CIs)
+
+plot(sample_size, CIWidth)
+
+
+# Change of Simulation Size B
+CIWidth = c()
+counter = 1
+size_B = seq(1000, 10000, by = 1000)
+for(size in size_B){
+  ci = MC_sample(100, size)
+  CIWidth[counter] = ci[2] - ci[1]
+  counter = counter + 1
+}
+plot(size_B, CIWidth)
 # Ans:
 
 
@@ -115,7 +138,7 @@ plot(CIs)
 # Ans: <[a-z]>.*<\/[a-z]>
 
 ##(3) An email address that ends with .com, .edu, .net, .org, or .gov(1 pts)
-# Ans: [a-zA-Z0-9._-]+@[a-zA-Z0-9._+-]+\.(com|edu|net|org|gov)
+# Ans: [a-zA-Z0-9\._-]+@[a-zA-Z0-9\._+-]+\.(com|edu|net|org|gov)
 
 #(b) Carry out the following exercises on the State of the Union Speeches dataset(available in moodle, stateoftheunion1790-2012.txt). (R)
 # (Suggestion: check the .txt data before coding the solutions and also lapply could be really helpful)
@@ -127,9 +150,9 @@ su_data = readLines("stateoftheunion1790-2012.txt")
 #####  number of speeches  #####
 regSpeech = "[A-Z][a-z\ ]+,\ [A-Z][A-Za-z\ ]+,\ [A-Z][A-Za-z\ 0-9]+,\ [0-9]+"
 length(grep(regSpeech, su_data))
-### ANS: 221 ###
+### ANS: 222 ###
 # > length(grep(regSpeech, su_data))
-# [1] 221
+# [1] 222
 #####  number of presidents that gave speeches  #####
 speeches = su_data[grep(regSpeech, su_data)]
 speechInfo = strsplit(speeches, ',')
@@ -158,8 +181,8 @@ su_month = SpeechInfoExtract(strsplit(su_date, ' '), 2, unique)
 ##(4) Merge the lines up into a list named su_speeches. Each element of the list is a character vector containing one speech. 
 ## The length of su_speeches should be the number of speeches in the data. Check: does the length of your list match your answer above? (3 pts)
 su_speeches = c()
-try = paste(su_data, collapse = '')
-try_str = as.character(try)
+try_str = paste(su_data, collapse = '')
+#try_str = as.character(try)
 splits = strsplit(try_str, "***", fixed = T)
 for(i in 2:223){
   su_speeches[i-1] = splits[[1]][i] 
@@ -167,18 +190,17 @@ for(i in 2:223){
 length(su_speeches)
 # > length(su_speeches)
 # [1] 222
-# Ans: 222, it is longer than it by 1.
+# Ans: 222, the same.
 
 ##(5) Eliminate apostrophes, numbers, and the phrase: (Applause.) and make all the characters lowercase for each element in su_speeches. (3 pts)
+tolower(gsub("[:digit:]|'|[*[Aa]pplause]*", "", su_speeches))
 
 ##(6) Split the speeches in su_speeches by blanks, punctuations. Drop any empty words that resulted from this split. 
 ## Save the result to another list su_tokens.Each element in the su_tokens should be a vector of words in the speeches.(2 pts)
-
+no_punct = strsplit(su_speeches, "[:punct:]|[:blank:]+")
+su_tokens = sapply(no_punct, function(lst) lst[lst != ""])
 ##(7) Based on su_tokens, create a list called su_frequency to calculate the token frequency for each token in each speech.(1 pts)
-
+su_frequency = sapply(su_tokens, unclass(table))
 ##(8) Carry out some exploratory analysis of the data and term frequencies. For example, find the number of sentences, extract the
 ## long words, and the political party. Plot and interpret the term frequencies. What are your observations? (3 pts)
-  
-  
-
 
