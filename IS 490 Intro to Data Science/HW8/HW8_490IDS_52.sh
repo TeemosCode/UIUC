@@ -201,11 +201,12 @@ echo "Top-$4 words are:"
 # Your answer here:
 echo "Answer - top'$4':"
 #echo `cat "$2" | tr " " "\n" | tr -d " " | tr -d "[:punct:]" | sort | uniq -c | sort -r | head -"$4"`
-echo `cat "$2" | tr " " "\n" | tr -d " " | sed "s/[[:punct:]]//g" | sort | uniq -c | sort -r | head -"$4"`
+echo `cat "$2" | tr " " "\n" | tr -d " " | sed "s/[[:punct:]]//g" | sort | uniq -c | sort -nr | head -"$4"`
 echo ""
 
+
 #mostfreq="`cat "$2" | tr " " "\n" | tr -d " " | tr -d "[:punct:]" | sort | uniq -c | sort -r | head -1`"
-mostfreq="`cat "$2" | tr " " "\n" | tr -d " " | sed "s/[[:punct:]]//g" | sort | uniq -c | sort -r | head -1`"
+mostfreq="`cat "$2" | tr " " "\n" | tr -d " " | sed "s/[[:punct:]]//g" | sort | uniq -c | sort -nr | head -1`"
 frequency="`echo "$mostfreq" | cut -d " " -f 3`"
 word="`echo "$mostfreq" | cut -d " " -f 4`"
 
