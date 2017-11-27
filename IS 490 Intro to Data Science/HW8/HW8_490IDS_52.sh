@@ -177,14 +177,12 @@ echo "Answer: --> '`grep -ow "$3" "$2" | wc -w | tr -d " "`'"
 echo "************ Q10 ************"
 echo "The number of unique words in text file:"
 # Your answer here:
-
-echo "Answer: --> '`cat "$2" | tr " " "\n" | tr -d " " | sed "s/[[:punct:]]//g" | sort | uniq | wc -w | tr -d " "`'"
-
+# echo "Answer: --> '`cat "$2" | tr " " "\n" | tr -d " " | sed "s/[[:punct:]]//g" |sort | uniq | wc -w | tr -d " "`'"
+echo "Answer: --> '`cat $2 | tr "[:punct:][:space:] " "\n" |grep -vp "^$" |sort | uniq | wc -w | tr -d " "`'"
 
 
 # Q11. Print the number of words that begin with the letter 'a' in the
 #     text file(Argument_2) (5 points).
-
 echo "************ Q11 ************"
 echo "The number of words that begins with letter 'a':"
 # Your answer here:
@@ -195,7 +193,6 @@ echo "Answer --> '`cat "$2" | tr " " "\n" | tr -d " " | grep -ow "^a.*" | wc -w 
 # Q12. Print top-k(Argument_4) and find the most frequent word and their frequencies.
 #      (5 points).
 #      (Hint: head) 
-
 echo "************ Q12 ************"
 echo "Top-$4 words are:"
 # Your answer here:
