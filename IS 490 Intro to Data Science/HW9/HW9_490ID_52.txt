@@ -1,5 +1,5 @@
 #===============================================================================#
-# Title:	IS490ID HW9		                                        			#
+# Title:	IS490_52 HW9		                                        			#
 # Due: 	Mon 12/04/2017 													        #
 # Submission: Moodle and hard copy of your two HW9_classID.sh scripts     		#
 # Note:		Please make sure your scripts work in Google Cloud. 				#
