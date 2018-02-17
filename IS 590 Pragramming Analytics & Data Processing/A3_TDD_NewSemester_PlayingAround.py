@@ -112,7 +112,20 @@ def flatten_list(nested_list: list) -> list:
     ...
     ValueError: nested_list parameter was already 1-dimensional.
     """
-    pass
+    nest_list_num = 0
+    stack = []
+    while nested_list:
+        element = nested_list.pop()
+        if type(element) == list:
+            nest_list_num += 1  # update
+            nested_list.extend(element)
+            continue
+        stack.append(element)
+
+    if nest_list_num != 0:
+        return stack[::-1]
+    else:
+        raise ValueError("nested_list parameter was already 1-dimensional.")
 
 
 def sum_list_numbers(x: list) -> float:
